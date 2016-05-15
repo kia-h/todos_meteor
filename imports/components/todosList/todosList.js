@@ -32,9 +32,9 @@ class TodosListCtrl {
 
   setChecked(task) {
     //set the checked property to the opposite of its current value
-    Task.update(task._id, {
+    Tasks.update(task._id, {
       $set: {
-        checked: !task.checked
+        checked: !task.checked 
       },
     });
   }
