@@ -29,6 +29,18 @@ class TodosListCtrl {
     //clear the form
     this.newTask = '';
   }
+
+  setChecked(task) {
+    //set the checked property to the opposite of its current value
+    Task.update(task._id, {
+      $set: {
+        checked: !task.checked
+      },
+    });
+  }
+  removeTask(task) {
+    Tasks.remove(task._id);
+  }
 }
 
 export default angular.module('todosList', [
