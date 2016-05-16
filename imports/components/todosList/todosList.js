@@ -43,27 +43,20 @@ class TodosListCtrl {
     })
   }
   addTask(newTask) {
-    //insert a ntask into collection
-    Tasks.insert({
-      text: newTask,
-      createdAt: new Date,
-      owner: Meteor.userId(),
-      username: Meteor.user().username
-    });
+    //insert a task into the collection
+    Meteor.call('tasks.insert', newTask);
+    
     //clear the form
     this.newTask = '';
   }
 
   setChecked(task) {
     //set the checked property to the opposite of its current value
-    Tasks.update(task._id, {
-      $set: {
-        checked: !task.checked 
-      },
-    });
+    Meteor.call('tasks.setChecked', task._id, !task.checked);
   }
+  
   removeTask(task) {
-    Tasks.remove(task._id);
+    Meteor.call('tasks.remove',task._id);
   }
 }
 
