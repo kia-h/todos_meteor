@@ -9,14 +9,32 @@ class TodosListCtrl {
   constructor($scope) {
     $scope.viewModel(this);
 
+    this.hideCompleted = false;
+
     this.helpers({
       tasks(){
-        //shows newest tasks at the top
-        return Tasks.find({}, {
+        const selector ={};
+
+        //if hide completed is checked, filter tasks
+        if(this.getReactively('hideCompleted')) {
+          selector.checked = {
+            $ne: true
+          };
+        }
+
+        //show newset tasks at the top
+        return Tasks.find(selector, {
           sort: {
             createdAt: -1
           }
         });
+      },
+      incompleteCount(){
+        return Tasks.find({
+          checked:{
+            $ne: true
+          }
+        }).count();
       }
     })
   }
